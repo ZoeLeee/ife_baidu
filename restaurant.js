@@ -1,8 +1,10 @@
 class Restaurant {
-  constructor(n) {
+  constructor(n, property) {
     this.staff = new Set();
     this.customers = new Set();
     this.seats = n;
+    this.property = property;
+    document.getElementById("property").textContent = "$" + property;
   }
   hire(w) {
     this.staff.add(w);
@@ -14,6 +16,7 @@ class Restaurant {
     if (this.customers.size <= this.seats)
       this.customers.add(c);
   }
+
 }
 class Worker {
   constructor(name, salary) {
@@ -61,11 +64,17 @@ class Chef extends Worker {
   }
 }
 
+const CustomerState={
+  HaveSeat:0,
+  Order:1,
+  Eatting:2,
+  Paying:3
+}
 class Customer {
   constructor(name) {
     this.name = name;
     this.menu = new Menu();
-    this.isEatting = true;
+    this.state=CustomerState.HaveSeat;
   }
   eating(dish) {
     dish.forEach(e => {
@@ -75,51 +84,58 @@ class Customer {
     this.isEatting = false;
   }
   //点菜
-  orderDishes(name) {
-    return this.menu.chooseDishes(name);
-  }
-}
-
-class Menu {
-  constructor() {
-    this.dishes = new Map([["fish", 30], ["carrot", 10]]);
-  }
-  chooseDishes(name) {
-    let price = this.dishes.get(name)
-    if (price) {
-      return { name, price }
-    }
+  orderDishes() {
+    let dishes=[];
+    let is=new Set();
+    console.log("正在点菜");
+    new Promise(res=>{
+      setTimeout(()=>{
+        this.state=Customer.Order;
+        let len=Dishes.length;
+        let count=GetNumber(0,len-1);
+        for(let i=0;i<=count;i++){
+          let index=GetNumber(0,len-1);
+          while(is.has(index)||is.size!==len){
+            index=GetNumber(0,len-1);
+          }
+          is.add(index)
+          dishes.push(Menu.Factory(Dishes[index]));
+        }
+        res(dishes);
+      },3000)
+    })
+    .then(d=>{
+      console.log("点好了");
+      return d;
+    })
   }
 }
 
 let waiter = Waiter.GetWaiter();
 let chef = Chef.GetChef();
 
-let restaurant = new Restaurant(1);
+let restaurant = new Restaurant(10, 10000);
+
 restaurant.hire(waiter);
 restaurant.hire(chef);
 let customer1 = new Customer("Lee");
 
 restaurant.haveSeat(customer1);
-console.log(restaurant.customers);
 
-let dish = customer1.orderDishes("fish");
-console.log('dish: ', dish);
+let dish = customer1.orderDishes();
 
-let dishes = waiter.work([dish.name]);
-console.log('dishes: ', dishes);
 
-let doDishes = []
-for (let d of dishes) {
-  doDishes.push(chef.work(d));
-}
-console.log('doDishes: ', doDishes);
+// let doDishes = []
+// for (let d of dishes) {
+//   doDishes.push(chef.work(d));
+// }
+// console.log('doDishes: ', doDishes);
 
-waiter.work(dishes[0]);
+// waiter.work(dishes[0]);
 
-customer1.eating(doDishes);
+// customer1.eating(doDishes);
 
-if(!customer1.isEatting){
-  restaurant.customers.delete(customer1);
-}
-console.log(restaurant.customers);
+// if (!customer1.isEatting) {
+//   restaurant.customers.delete(customer1);
+// }
+// console.log(restaurant.customers);
