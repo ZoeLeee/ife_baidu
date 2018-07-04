@@ -14,7 +14,7 @@
       height: 960px;
     }
 
-    .chef {
+    .flex {
       display: flex
     }
 
@@ -30,64 +30,55 @@
       <span>金额:</span>
       <span id="property"></span>
     </div>
-    <div class="chef">
+    <div class="flex" id="chef">
       <img src="img/chef.jpg" alt="">
       <div>
         <p>
           <span>状态:</span>
-          <span>做菜</span>
+          <span class="status">空闲</span>
         </p>
         <p>
           <span>多久做完</span>
         </p>
       </div>
-      <ul>
-        <li>鱼</li>
+      <ul id="dishes">
       </ul>
     </div>
-    <div class="chef">
+    <div class="flex" id="waiter">
       <img src="img/waiter.jpg" alt="">
       <div>
         <p>
           <span>状态:</span>
-          <span>做菜</span>
+          <span class="status">空闲</span>
         </p>
         <p>
-          <span>点菜时间</span>
+          <span class="time">点菜时间</span>
         </p>
         <p>
-          <span>位置</span>
+          <span class="pos">位置</span>
         </p>
       </div>
     </div>
-      <ul class="chef">
-        <li>用餐区</li>
-        <li>
-          <img src="img/customer.png" alt="">
-          <p>
-            <span>状态：</span><span>点菜中</span>
-          </p>
-          <ul>
-            <li>鱼 <span>状态</span>  </li>
-          </ul>  
-        </li>
-        <li>
-          <img src="img/customer.png" alt="">
-        </li>
-      </ul>
-      <ul class="chef">
-        <li>排队区</li>
-        <li>
-          <img src="img/customer.png" alt="">
-        </li>
-        <li>
-          <img src="img/customer.png" alt="">
-        </li>
-      </ul>
+    <div>
+      <span>用餐区</span>
+    </div>
+    <ul class="flex" id="seats" style="border: 1px solid #000">
+
+    </ul>
+    <ul class="flex">
+      <li>排队区</li>
+      <li>
+        <img src="img/customer.png" alt="">
+      </li>
+      <li>
+        <img src="img/customer.png" alt="">
+      </li>
+    </ul>
   </div>
-  <script  src="Utitl.js"></script>
-  <script  src="Menu.js"></script>
-  <script  src="restaurant.js"></script>
+  <script src="Utitl.js"></script>
+  <script src="Menu.js"></script>
+  <script src="restaurant.js"></script>
+  <script src="workCommand.js"></script>
 </body>
 
 </html>
