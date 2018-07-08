@@ -1,8 +1,8 @@
 class Restaurant {
   constructor(n, property) {
     this.staff = new Set();
-    this.waiters=new Set();
-    this.chefs=new Set();
+    this.waiters = new Set();
+    this.chefs = new Set();
     this.customers = new Set();
     this.seats = n;
     this.property = property;
@@ -11,17 +11,17 @@ class Restaurant {
   }
   hire(w) {
     this.staff.add(w);
-    if(w.type==="waiter"){
+    if (w.type === "waiter") {
       this.waiters.add(w)
-    }else{
+    } else {
       this.chefs.add(w);
     }
   }
   fire(w) {
     this.staff.delete(w);
-    if(w.type==="waiter"){
+    if (w.type === "waiter") {
       this.waiters.delete(w)
-    }else{
+    } else {
       this.chefs.add(w);
     }
   }
@@ -53,7 +53,7 @@ class Worker {
   constructor(name, salary) {
     this.name = name;
     this.salary = salary;
-    this.isWorking=false;
+    this.isWorking = false;
   }
   work() {
 
@@ -62,20 +62,32 @@ class Worker {
 class Waiter extends Worker {
   constructor(name, salary) {
     super(name, salary);
-    this.type="waiter";
+    this.type = "waiter";
+    this.waiterHtml = document.getElementById("waiter");
   }
   async work(par) {
-    this.isWorking=true;
+    this.isWorking = true;
     console.log(typeof par);
     if (Array.isArray(par)) {
-      document.getElementById("waiter").getElementsByClassName("status")[0].innerText="点菜中";
+      this.waiterHtml.getElementsByClassName("status")[0].innerText = "点菜中";
       //给厨师做
-      WorkCommand.Command().execute("giveChef",par)
+      return new Promise(res => {
+        setTimeout(() => {
+          this.waiterHtml.getElementsByClassName("pos")[0].innerText = "在厨师那";
+          WorkCommand.Command().execute("giveChef", par)
+          res();
+        }, 500);
+      })
     }
     else {
-      console.log("上菜");
-      console.log(par);
-      return par;
+      return new Promise(res => {
+        setTimeout(() => {
+          console.log("上菜");
+          this.waiterHtml.getElementsByClassName("pos")[0].innerText = "在顾客那";
+          res(par)
+        }, 500);
+      })
+
     }
   }
 
@@ -89,20 +101,32 @@ class Waiter extends Worker {
 class Chef extends Worker {
   constructor(name, salary) {
     super(name, salary);
-    this.type="chef";
+    this.type = "chef";
   }
   async work(ds) {
-    this.isWorking=true;
-    document.getElementById("chef").getElementsByClassName("status")[0].innerText="做菜中";
-    for(let d of ds){
-      new Promise(res=>{
-        setTimeout(()=>{
-          res(d)
-        },d.time)
-      }).then(d=>{
-        WorkCommand.Command().execute("serving",d);
-      })
+    this.isWorking = true;
+
+    ShowDishes("chef", ds);
+    let chefStatus = document.getElementById("chef").getElementsByClassName("status")[0];
+    let dishes = document.getElementById("chef").getElementsByClassName("dishes")[0];
+    let times= document.getElementById("chef").getElementsByClassName("time")[0];
+    for (let d of ds) {
+      chefStatus.innerText = "正在做" + d.name;
+      times.innerText="还需要"+d.time+"秒做完";
+      await (() => {
+        return new Promise(res => {
+          setTimeout(()=>{
+            res();
+          }, d.time * 1000)
+        })
+      })();
+      dishes.removeChild(dishes.firstElementChild);
+      WorkCommand.Command().execute("serving", d);
+      document.getElementById("waiter").getElementsByClassName("pos")[0].innerText = "在厨师那";
     }
+    chefStatus.innerText = "空闲";
+    times.innerText="";
+    this.isWorking=false;
   }
   static GetChef() {
     if (!this.C) {
@@ -151,22 +175,15 @@ class Customer {
             index = GetNumber(0, len - 1);
           }
           is.add(index)
-          let dish=Menu.Factory(Dishes[index]);
-          dish.owner=this;
+          let dish = Menu.Factory(Dishes[index]);
+          dish.owner = this;
           dishes.push(dish);
         }
         console.log("点好了");
         status.innerHTML = "点好了";
-        let frag = document.createDocumentFragment();
+        ShowDishes(this.name, dishes)
 
-        dishes.forEach(d => {
-          let li = document.createElement("li");
-          li.innerText = d.name;
-          frag.appendChild(li);
-        })
-        document.getElementById(this.name).getElementsByClassName("dishes")[0].appendChild(frag);
-
-         res(dishes);
+        res(dishes);
       }, 3000)
     })
 
@@ -184,12 +201,12 @@ restaurant.hire(chef);
 let cus1 = new Customer("Lee");
 restaurant.haveSeat(cus1);
 let cus2 = new Customer("Li");
-  restaurant.haveSeat(cus2);
+restaurant.haveSeat(cus2);
 
-(async ()=>{
-  let dishes=await cus1.orderDishes();
-  await WorkCommand.Command().execute("order",dishes);
+(async () => {
+  let dishes = await cus1.orderDishes();
+  await WorkCommand.Command().execute("order", dishes);
 
-  dish = cus2.orderDishes();
+  // dish = cus2.orderDishes();
 })();
 

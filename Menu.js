@@ -29,21 +29,21 @@ Menu.Fish1=class Fish1 extends Menu{
 Menu.Fish2=class Fish2 extends Menu{
   constructor(name){
     super(name);
-    this.time=5;
+    this.time=3;
     this.price=100;
   }
 }
 Menu.Fish3=class Fish3 extends Menu{
   constructor(name){
     super(name);
-    this.time=6;
+    this.time=4;
     this.price=70;
   }
 }
 Menu.Fish4=class Fish4 extends Menu{
   constructor(name){
     super(name);
-    this.time=8;
+    this.time=5;
     this.price=80;
   }
 }

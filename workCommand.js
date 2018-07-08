@@ -8,7 +8,7 @@ class WorkCommand{
   async execute(name,...par){
     let cmd=this.cmdList.get(name);
     if(cmd){
-      cmd.execute(...par);
+      await cmd.execute(...par);
     }
     else{
       console.log("命令错误");
@@ -34,7 +34,6 @@ class Command{
 
 class OrderCommand extends Command{
   execute(...par){
-    console.log("点菜");
     for(let waiter of restaurant.waiters){
       if(!waiter.isWorking){
         waiter.work(...par);
@@ -44,11 +43,10 @@ class OrderCommand extends Command{
   }
 }
 class GiveChefCommand extends Command{
-  execute(...par){
-    console.log("给厨师");
+  async execute(...par){
     for(let chef of restaurant.chefs){
       if(!chef.isWorking){
-        chef.work(...par);
+        await chef.work(...par);
         break;
       }
     }
@@ -56,7 +54,6 @@ class GiveChefCommand extends Command{
 }
 class ServingCommand extends Command{
   execute(...par){
-    console.log("上菜");
     for(let waiter of restaurant.waiters){
       if(waiter.isWorking){
         waiter.work(...par);
