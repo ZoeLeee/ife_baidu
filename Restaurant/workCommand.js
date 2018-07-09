@@ -5,10 +5,10 @@ class WorkCommand{
   register(name,cmd){
     this.cmdList.set(name,cmd);
   }
-  async execute(name,...par){
+  execute(name,...par){
     let cmd=this.cmdList.get(name);
     if(cmd){
-      await cmd.execute(...par);
+      return cmd.execute(...par);
     }
     else{
       console.log("命令错误");
@@ -36,8 +36,7 @@ class OrderCommand extends Command{
   execute(...par){
     for(let waiter of restaurant.waiters){
       if(!waiter.isWorking){
-        waiter.work(...par);
-        break;
+       return waiter;
       }
     }
   }
