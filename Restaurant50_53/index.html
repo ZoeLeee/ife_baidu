@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #main {
+      margin: 0 auto;
+      border: 1px solid #000;
+      width: 480px;
+      height: 960px;
+    }
+
+    .flex {
+      display: flex
+    }
+
+    ul {
+      list-style: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="main">
+    <div>
+      <span>金额:</span>
+      <span id="property"></span>
+    </div>
+    <div class="flex" id="chef">
+      <img src="img/chef.jpg" alt="">
+      <div>
+        <p>
+          <span>状态:</span>
+          <span class="status">空闲</span>
+        </p>
+        <p>
+          <span class="time"></span>
+        </p>
+        <ul class="dishes"></ul>
+      </div>
+      <ul id="dishes">
+      </ul>
+    </div>
+    <div class="flex" id="waiter">
+      <img src="img/waiter.jpg" alt="">
+      <div>
+        <p>
+          <span>状态:</span>
+          <span class="status">空闲</span>
+        </p>
+       
+        <p>
+          <span class="pos">在休息</span>
+        </p>
+      </div>
+    </div>
+    <div>
+      <span>用餐区</span>
+    </div>
+    <ul class="flex" id="seats" style="border: 1px solid #000">
+
+    </ul>
+    <div>
+      <span>排队区</span>
+    </div>
+    <ul class="flex" id="queues">
+      
+    </ul>
+  </div>
+  <script src="Utitl.js"></script>
+  <script src="Menu.js"></script>
+  <script src="Customer.js"></script>
+  <script src="Worker.js"></script>
+  <script src="Waiter.js"></script>
+  <script src="Chef.js"></script>
+  <script src="restaurant.js"></script>
+</body>
+
+</html>

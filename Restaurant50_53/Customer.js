@@ -13,6 +13,8 @@ class Customer {
     this.dishes=[];
     this.eatedDishes=new Set();
     this.price=0;
+    //0入座，1点菜，2.吃菜，3.付款4离开，-1，排队
+    this.status=-1;
   }
   async eating(dish) {
     if(dish){
@@ -34,9 +36,8 @@ class Customer {
   }
   //点菜
   async orderDishes() {
-    console.log(this.id);
-    console.log(document.getElementById("cus"+this.id));
-    let status = document.getElementById("cus"+this.id).getElementsByClassName("status")[0];
+    this.status=1;
+    let status = document.getElementById(this.id).getElementsByClassName("status")[0];
     let is = new Set();
     status.innerHTML = "正在点菜";
     return new Promise(res => {
@@ -57,7 +58,7 @@ class Customer {
         }
         
         status.innerHTML = "点好了";
-        ShowDishes(this.name, this.dishes, true)
+        ShowDishes(this.id, this.dishes, true)
         res(this.dishes);
       }, 3000)
     })
