@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    @font-face {
+      font-family: 'iconfont';
+      /* project id 758257 */
+      src: url('http://at.alicdn.com/t/font_758257_6j6lr3f0ros.eot');
+      src: url('http://at.alicdn.com/t/font_758257_6j6lr3f0ros.eot?#iefix') format('embedded-opentype'),
+        url('http://at.alicdn.com/t/font_758257_6j6lr3f0ros.woff') format('woff'),
+        url('http://at.alicdn.com/t/font_758257_6j6lr3f0ros.ttf') format('truetype'),
+        url('http://at.alicdn.com/t/font_758257_6j6lr3f0ros.svg#iconfont') format('svg');
+    }
+
+    .iconfont {
+      font-family: "iconfont" !important;
+      font-size: 16px;
+      font-style: normal;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-stroke-width: 0.2px;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    div {
+      border: 1px solid #000;
+      width: 200px;
+      height: 100px;
+      text-align: center;
+      line-height: 100px;
+    }
+    div>img{
+      width: 100%;
+      height: 100%;
+    }
+    input{
+      border: 1px solid #000;
+      background: #ccc;
+      width: 100px;
+      height: 50px;
+    }
+    #image{
+      display: none;
+    }
+  </style>
+</head>
+<body>
+    <label>照相机</label>
+    <label for="image">
+      <i class="iconfont">&#xe86f;</i>
+      <input type="file" id='image' accept="image/*" capture='camera'>
+    </label>
+    <div>
+        <img src="" id="img" alt="">
+    </div>
+    <label>摄像机</label>
+    <input type="file" id='video' accept="video/*" capture='camcorder'>
+    <script>
+       var file = document.querySelector('input');
+        if (getIos()) {
+            file.removeAttribute("capture");
+        }
+        function getIos() {
+            var ua=navigator.userAgent.toLowerCase();
+            if (ua.match(/iPhone\sOS/i) == "iphone os") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+       function get_img(f) {
+				var rd = new FileReader();//创建文件读取对象
+				var files = f.files[0];//获取file组件中的文件
+				rd.readAsDataURL(files); //文件读取装换为base64类型
+				rd.onloadend = function(e) {
+        //加载完毕之后获取结果赋值给img
+					document.getElementById("img").src = this.result;
+				}
+			}
+      document.getElementById("image").addEventListener('change',(e)=>{
+        get_img(e.target);
+      })
+    </script>
+</body>
+</html>

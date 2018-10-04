@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./Learn/dialog.css">
+</head>
+<body>
+    <button id="btn">弹处dialog</button>
+    <button id="btn1">弹处loading</button>
+    <!-- 遮罩层 -->
+    <div class="fixed-center" id="mask"></div>
+    <script src="./Learn/dialog.js"></script>
+    <script>
+      document.getElementById('btn').addEventListener('click',()=>{
+        let dialog=new Dialog({
+          title:"警告",
+          content:"  Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta dolor suscipit et mollitia labore consequuntur consequatur, hic ex quae est enim? Saepe voluptates perferendis maiores obcaecati enim beatae, provident porro.",
+          footer:`
+            <button>确定</button>
+            <button>取消</button>
+          `
+        })
+      })
+      document.getElementById('btn1').addEventListener('click',()=>{
+        let dialog=new Dialog({
+          content:`<img src="https://media.giphy.com/media/jAYUbVXgESSti/giphy.gif" style="width:100%" />`,
+        })
+      })
+    </script>
+</body>
+</html>
