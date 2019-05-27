@@ -1,85 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
-    #main {
-      margin: 0 auto;
-      border: 1px solid #000;
-      width: 480px;
-      height: 960px;
+    .main{
+      display: flex;
+      justify-content: space-around;
     }
 
-    .flex {
-      display: flex
-    }
-
-    ul {
-      list-style: none;
-    }
   </style>
 </head>
-
 <body>
-  <div id="main">
+  <h1>
+    餐厅的金额<span id="price"></span>
+  </h1>
+  <div class="main">
     <div>
-      <span>金额:</span>
-      <span id="property"></span>
-    </div>
-    <div class="flex" id="chef">
-      <img src="img/chef.jpg" alt="">
-      <div>
-        <p>
-          <span>状态:</span>
-          <span class="status">空闲</span>
-        </p>
-        <p>
-          <span class="time"></span>
-        </p>
-        <ul class="dishes"></ul>
-      </div>
-      <ul id="dishes">
+      <h4>厨师</h4>
+      <p>状态<span id="cookStatus"></span></p>
+      <p id="cookTime"></p>
+      <ul id="dishLish">
+
       </ul>
     </div>
-    <div class="flex" id="waiter">
-      <img src="img/waiter.jpg" alt="">
-      <div>
-        <p>
-          <span>状态:</span>
-          <span class="status">空闲</span>
-        </p>
-       
-        <p>
-          <span class="pos">在休息</span>
-        </p>
-      </div>
+    <div>
+      <h4>服务员</h4>
+      <p>状态<span id="waiterStatus"></span></p>
+      <p>位置：<span id="waiterPos"></span></p>
+      <p id="cookTime"></p>
     </div>
     <div>
-      <span>用餐区</span>
+      <h4>顾客</h4>
+      <p>状态<span id="cusStatus"></span></p>
+      <p id="cusTime"></p>
+      <ul id="cusDishes">
+
+      </ul>
     </div>
-    <ul class="flex" id="seats" style="border: 1px solid #000">
+    <div>
+      <h5>队列</h5>
+      <ul id="list">
 
-    </ul>
-    <ul class="flex">
-      <li>排队区</li>
-      <li>
-        <img src="img/customer.png" alt="">
-      </li>
-      <li>
-        <img src="img/customer.png" alt="">
-      </li>
-    </ul>
+      </ul>
+    </div>
   </div>
-  <script src="Utitl.js"></script>
-  <script src="Menu.js"></script>
-  <script src="Customer.js"></script>
-  <script src="Worker.js"></script>
-  <script src="restaurant.js"></script>
-  <script src="workCommand.js"></script>
+  <script src="./js/appDom.js"></script>
+  <script src="./js/utils.js"></script>
+  <script src="./js/Restaurant.js"></script>
+  <script src="./js/Staff.js"></script>
+  <script src="./js/Waiter.js"></script>
+  <script src="./js/Cook.js"></script>
+  <script src="./js/Customer.js"></script>
+  <script src="./js/Dish.js"></script>
+  <script src="./js/index.js"></script>
 </body>
-
 </html>
